@@ -3,63 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Админко — Сервисный центр в Кемерово</title>
-    <meta name="description" content="Честный ремонт ноутбуков, компьютеров и телефонов в Кемерово. Диагностика 0 руб. Смета до начала работ. Монтаж видеонаблюдения.">
+    <title>Сервисный центр Админ.Ко Кемерово — Ремонт ноутбуков и телефонов</title>
+    <meta name="description" content="Профессиональный ремонт ноутбуков, смартфонов и электроники в Кемерово. Сервисный центр Админ.Ко: диагностика 0₽, опыт 12 лет, гарантия до 12 месяцев. Ул. Дзержинского, 2Б.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://admin-ko.ru/">
+    <meta property="og:title" content="Сервисный центр Админ.Ко Кемерово — Ремонт электроники">
+    <meta property="og:description" content="Честный ремонт ноутбуков, смартфонов и ПК. Диагностика 0₽, гарантия 12 месяцев. Дзержинского, 2Б.">
+    <meta property="og:image" content="https://admin-ko.ru/favicon.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://admin-ko.ru/">
+    <meta property="twitter:title" content="Сервисный центр Админ.Ко Кемерово — Ремонт электроники">
+    <meta property="twitter:description" content="Честный ремонт ноутбуков, смартфонов и ПК. Диагностика 0₽, гарантия 12 месяцев. Дзержинского, 2Б.">
+    <meta property="twitter:image" content="https://admin-ko.ru/favicon.jpg">
+
+    <!-- JSON-LD Microdata -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Админ.Ко",
+      "image": "https://admin-ko.ru/favicon.jpg",
+      "@id": "https://admin-ko.ru/",
+      "url": "https://admin-ko.ru/",
+      "telephone": "+79502767171",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "ул. Дзержинского, 2Б",
+        "addressLocality": "Кемерово",
+        "postalCode": "650000",
+        "addressCountry": "RU"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 55.353279,
+        "longitude": 86.075088
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "09:00",
+          "closes": "21:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "12:00",
+          "closes": "18:00"
+        }
+      ],
+      "sameAs": [
+        "https://yandex.ru/maps/org/admin_ko/1071276806/",
+        "https://2gis.ru/kemerovo/firm/70000001020141212"
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "85"
+      }
+    }
+    </script>
+
     <link rel="icon" href="/favicon.jpg" type="image/jpeg">
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+    <link rel="canonical" href="https://admin-ko.ru/">
+    <link rel="stylesheet" href="styles.css?v=3.1">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    <style type="text/tailwindcss">
-        :root {
-            --primary: #E50914;
-            --primary-hover: #b00303;
-        }
-        @layer components {
-            .brand-stripes {
-                @apply flex flex-col gap-1;
-            }
-            .brand-stripe {
-                @apply h-1 bg-[var(--primary)] w-full;
-            }
-            .brand-stripe-thin {
-                @apply h-0.5 bg-[var(--primary)] w-full;
-            }
-        }
-    </style>
-    <script>
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        primary: "#E50914",
-                        "primary-hover": "#b00303",
-                        "background-light": "#F9FAFB",
-                        "background-dark": "#111827",
-                        "surface-light": "#FFFFFF",
-                        "surface-dark": "#1F2937",
-                        "text-light": "#1F2937",
-                        "text-dark": "#F3F4F6",
-                        "text-muted-light": "#6B7280",
-                        "text-muted-dark": "#9CA3AF",
-                    },
-                    fontFamily: {
-                        display: ["Inter", "sans-serif"],
-                        sans: ["Inter", "sans-serif"],
-                    },
-                    borderRadius: {
-                        DEFAULT: "0.5rem",
-                    },
-                },
-            },
-        };
-    </script>
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-    </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark transition-colors duration-300">
 
@@ -252,7 +271,7 @@
                         <p class="ml-16 text-lg leading-6 font-medium text-text-light dark:text-text-dark">Чиним в день сдачи</p>
                     </dt>
                     <dd class="mt-2 ml-16 text-base text-text-muted-light dark:text-text-muted-dark">
-                        Не ждем детали неделями — держим собственный склад из 4 500 ходовых запчастей прямо в лаборатории.
+                        Не ждем детали неделями — держим собственный склад из 4 500 ходовых запчастей прямо в сервисный центрии.
                     </dd>
                 </div>
                 <div class="relative">
@@ -334,12 +353,12 @@
                     <span class="material-symbols-outlined text-sm">star</span>
                     <span class="material-symbols-outlined text-sm">star</span>
                 </div>
-                <p class="text-text-light dark:text-text-dark text-sm italic mb-6">«Думала, макбуку конец после пролитого вина. В другом месте насчитали 40 тысяч! Тут ребята промыли всё в ультразвуке и взяли 6000. Работает полгода без сбоев.»</p>
+                <p class="text-text-light dark:text-text-dark text-sm italic mb-6">«Сделали чистку и замену термухи за каких-то 2-3 часа! Плюсом мой ноут не самый обычный в сборке и разборе (MSI Raider), но ребята справились. Рекомендую этот сервис в Кемерово!»</p>
                 <div class="flex items-center">
-                    <div class="h-10 w-10 rounded-full bg-red-50 flex items-center justify-center text-primary font-bold">ЕВ</div>
+                    <div class="h-10 w-10 rounded-full bg-red-50 flex items-center justify-center text-primary font-bold">АМ</div>
                     <div class="ml-3">
-                        <p class="text-sm font-bold text-text-light dark:text-text-dark">Елена В.</p>
-                        <p class="text-xs text-primary font-medium mt-0.5">Сложный ремонт MacBook</p>
+                        <p class="text-sm font-bold text-text-light dark:text-text-dark">Алиса Мигда</p>
+                        <p class="text-xs text-primary font-medium mt-0.5">Чистка игрового ноутбука MSI</p>
                     </div>
                 </div>
             </div>
@@ -352,12 +371,12 @@
                     <span class="material-symbols-outlined text-sm">star</span>
                     <span class="material-symbols-outlined text-sm">star</span>
                 </div>
-                <p class="text-text-light dark:text-text-dark text-sm italic mb-6">«Разбил экран перед командировкой. Залетел к ним, поменяли прямо при мне минут за 15. Показали маркировки, что оригинал. Быстро, без навязывания стекол за 5 тыщ.»</p>
+                <p class="text-text-light dark:text-text-dark text-sm italic mb-6">«Отличный сервис! Отдавали телевизор Supra, сгорела подсветка. Всё сделано в срок, в лучшем качестве, без накруток цен. Классные ребята на Дзержинского! С ремонтом техники теперь только сюда.»</p>
                 <div class="flex items-center">
-                    <div class="h-10 w-10 rounded-full bg-red-50 flex items-center justify-center text-primary font-bold">ИТ</div>
+                    <div class="h-10 w-10 rounded-full bg-red-50 flex items-center justify-center text-primary font-bold">ОЧ</div>
                     <div class="ml-3">
-                        <p class="text-sm font-bold text-text-light dark:text-text-dark">Игорь Т.</p>
-                        <p class="text-xs text-primary font-medium mt-0.5">Экспресс-замена экрана iPhone</p>
+                        <p class="text-sm font-bold text-text-light dark:text-text-dark">Олеся Чащина</p>
+                        <p class="text-xs text-primary font-medium mt-0.5">Ремонт телевизора в Кемерово</p>
                     </div>
                 </div>
             </div>
@@ -370,13 +389,75 @@
                     <span class="material-symbols-outlined text-sm">star</span>
                     <span class="material-symbols-outlined text-sm">star</span>
                 </div>
-                <p class="text-text-light dark:text-text-dark text-sm italic mb-6">«Ставили камеры в торговый зал. Приехали вовремя, надели бахилы (шок!), просверлили аккуратно, всё убрали. Настроили приложуху. Картинка четкая.»</p>
+                <p class="text-text-light dark:text-text-dark text-sm italic mb-6">«Уже дважды приносил свой ноутбук, делают всё быстро и качественно. Нет накрутки ненужных услуг, адекватные цены по сравнению с конкурентами в Кемерово. Рекомендую Админ.Ко!»</p>
                 <div class="flex items-center">
-                    <div class="h-10 w-10 rounded-full bg-red-50 flex items-center justify-center text-primary font-bold">С</div>
+                    <div class="h-10 w-10 rounded-full bg-red-50 flex items-center justify-center text-primary font-bold">МД</div>
                     <div class="ml-3">
-                        <p class="text-sm font-bold text-text-light dark:text-text-dark">Сергей</p>
-                        <p class="text-xs text-primary font-medium mt-0.5">Монтаж видеонаблюдения (B2B)</p>
+                        <p class="text-sm font-bold text-text-light dark:text-text-dark">Максим Давлетбаев</p>
+                        <p class="text-xs text-primary font-medium mt-0.5">Ремонт ноутбука (Кемерово)</p>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-12 text-center">
+            <a href="https://yandex.ru/maps/org/admin_ko/1071276806/reviews/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-primary font-bold hover:underline">
+                <span class="material-symbols-outlined mr-2">stars</span>
+                Смотреть все 40+ отзывов на Яндекс Картах
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-16 bg-white dark:bg-surface-dark">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-extrabold mb-4">Часто задаваемые вопросы</h2>
+            <p class="text-text-muted-light dark:text-text-muted-dark">Всё, что нужно знать перед визитом в сервисный центрию</p>
+        </div>
+        
+        <div class="space-y-4">
+            <!-- FAQ Item 1 -->
+            <div class="faq-item border-2 border-gray-100 dark:border-gray-800 rounded-2xl overflow-hidden transition-all">
+                <button class="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                    <span class="font-bold text-gray-900 dark:text-white">Сколько стоит диагностика, если я откажусь от ремонта?</span>
+                    <span class="material-symbols-outlined text-primary transition-transform duration-300">expand_more</span>
+                </button>
+                <div class="faq-content hidden p-6 pt-0 text-gray-600 dark:text-gray-400 border-t border-gray-50 dark:border-gray-800">
+                    В нашей сервисный центрии диагностика всегда 0₽, даже в случае отказа от ремонта. Мы считаем, что вы должны знать проблему и стоимость её решения прежде, чем платить деньги.
+                </div>
+            </div>
+
+            <!-- FAQ Item 2 -->
+            <div class="faq-item border-2 border-gray-100 dark:border-gray-800 rounded-2xl overflow-hidden transition-all">
+                <button class="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                    <span class="font-bold text-gray-900 dark:text-white">Какие гарантии вы предоставляете?</span>
+                    <span class="material-symbols-outlined text-primary transition-transform duration-300">expand_more</span>
+                </button>
+                <div class="faq-content hidden p-6 pt-0 text-gray-600 dark:text-gray-400 border-t border-gray-50 dark:border-gray-800">
+                    Стандартная гарантия на работы и запчасти составляет от 3 до 12 месяцев. Мы выдаём официальный акт выполненных работ с печатью. Если в течение гарантийного срока проблема повторится — исправим бесплатно и без очереди.
+                </div>
+            </div>
+
+            <!-- FAQ Item 3 -->
+            <div class="faq-item border-2 border-gray-100 dark:border-gray-800 rounded-2xl overflow-hidden transition-all">
+                <button class="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                    <span class="font-bold text-gray-900 dark:text-white">Как быстро вы ремонтируете технику?</span>
+                    <span class="material-symbols-outlined text-primary transition-transform duration-300">expand_more</span>
+                </button>
+                <div class="faq-content hidden p-6 pt-0 text-gray-600 dark:text-gray-400 border-t border-gray-50 dark:border-gray-800">
+                    92% ремонтов выполняются в день обращения. Простые задачи (замена экрана, АКБ, чистка) занимают от 30 до 60 минут. Сложный компонентный ремонт плат может занять 2-3 рабочих дня.
+                </div>
+            </div>
+
+            <!-- FAQ Item 4 -->
+            <div class="faq-item border-2 border-gray-100 dark:border-gray-800 rounded-2xl overflow-hidden transition-all">
+                <button class="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                    <span class="font-bold text-gray-900 dark:text-white">Можно ли принести свои запчасти?</span>
+                    <span class="material-symbols-outlined text-primary transition-transform duration-300">expand_more</span>
+                </button>
+                <div class="faq-content hidden p-6 pt-0 text-gray-600 dark:text-gray-400 border-t border-gray-50 dark:border-gray-800">
+                    Да, мы можем установить ваши детали, но в этом случае гарантия будет распространяться только на саму работу. Мы рекомендуем использовать наши проверенные запчасти, на которые мы даём полную гарантию.
                 </div>
             </div>
         </div>
@@ -418,7 +499,7 @@
 <!-- Контейнер для футера -->
 <div id="footer-container"></div>
 
-<script src="components.js"></script>
+<script src="components.js?v=3.1"></script>
 <script>
     function openMessengerModal() {
         document.getElementById('messenger-modal').classList.remove('hidden');

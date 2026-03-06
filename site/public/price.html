@@ -3,43 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Прайс-лист на ремонт | Админко Кемерово</title>
-    <meta name="description" content="Цены на ремонт телефонов, ноутбуков и видеонаблюдения в Кемерово. Диагностика бесплатно. Гарантия 12 месяцев.">
-    <link rel="icon" href="/favicon.jpg" type="image/jpeg">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Цены на ремонт техники в Кемерово — Прайс-лист Админ.Ко</title>
+    <meta name="description" content="Актуальные цены на ремонт смартфонов, ноутбуков и электроники. Честный прайс без скрытых накруток в сервисном центре Админ.Ко.">
+    <link rel="canonical" href="https://admin-ko.ru/price.html">
+    <meta property="og:title" content="Прайс-лист на ремонт техники в Кемерово | Админ.Ко">
+    <meta property="og:description" content="Честные цены на все услуги. Диагностика 0₽ даже без ремонта.">
+    <meta property="og:image" content="https://admin-ko.ru/logo.png">
+    <link rel="stylesheet" href="styles.css?v=3.1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#E50914',
-                        'primary-dark': '#B50303',
-                        'surface-light': '#F8F9FA',
-                        'surface-dark': '#1E293B',
-                        'text-light': '#111827',
-                        'text-dark': '#F9FAFB',
-                        'text-muted-light': '#6B7280',
-                        'text-muted-dark': '#9CA3AF',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .brand-stripes { display: flex; flex-direction: column; gap: 4px; }
-        .brand-stripe { height: 4px; background-color: #E50914; width: 100%; }
-        .brand-stripe-thin { height: 2px; background-color: #E50914; width: 100%; }
-        .search-highlight { background-color: rgba(217, 4, 4, 0.1); font-weight: 600; }
-    </style>
 </head>
 <body class="bg-white dark:bg-surface-dark text-text-light dark:text-text-dark antialiased">
 
@@ -214,7 +188,7 @@
 <div id="footer-container"></div>
 
 <script src="price-data.js"></script>
-<script src="components.js"></script>
+<script src="components.js?v=3.1"></script>
 <script>
     // Инициализация прайс-листа
     document.addEventListener('DOMContentLoaded', async function() {

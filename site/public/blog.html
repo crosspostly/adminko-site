@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>База знаний | Сервисный центр Админ.Ко Кемерово</title>
+    <meta name="description" content="Полезные статьи, инструкции и кейсы по ремонту телефонов, ноутбуков и электроники в Кемерово от экспертов Админ.Ко.">
+    <link rel="icon" href="/favicon.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="styles.css?v=3.1">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#E50914' } } } }
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 flex flex-col min-h-screen">
+    
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center h-16">
+            <a href="index.html" class="font-bold text-xl flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary">build_circle</span> Админ.Ко
+            </a>
+            <nav class="hidden md:flex items-center gap-6">
+                <a href="index.html" class="text-sm font-medium text-gray-600 hover:text-primary transition-colors">Главная</a>
+                <a href="about.html" class="text-sm font-medium text-gray-600 hover:text-primary transition-colors">О компании</a>
+                <a href="price.html" class="text-sm font-medium text-gray-600 hover:text-primary transition-colors">Цены</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-5xl mx-auto px-4 py-12 w-full">
+        <div class="text-center mb-12">
+            <h1 class="text-3xl md:text-5xl font-extrabold mb-4">База знаний</h1>
+            <p class="text-lg text-gray-600 dark:text-gray-400">Кейсы ремонтов, советы инженеров и инструкции</p>
+        </div>
+
+        <div id="articles-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Сюда будут загружаться статьи через JS -->
+            <div class="col-span-full text-center py-12 text-gray-500">
+                <span class="animate-spin material-symbols-outlined text-3xl mb-2 block">sync</span>
+                Загрузка статей...
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-8 text-center text-sm text-gray-500 mt-auto">
+        &copy; 2014-2026 Сервисный центр «Админ.Ко». г. Кемерово, ул. Дзержинского, 2Б.
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const container = document.getElementById('articles-container');
+            
+            try {
+                const response = await fetch('blog/index.json');
+                if (!response.ok) throw new Error('Индекс не найден');
+                
+                const allArticles = await response.json();
+                
+                // Фильтруем статьи: показываем только те, дата которых уже наступила
+                const now = new Date();
+                const publishedArticles = allArticles.filter(article => new Date(article.publish_date) <= now);
+                
+                // Сортируем по дате (самые новые сверху)
+                publishedArticles.sort((a, b) => new Date(b.publish_date) - new Date(a.publish_date));
+
+                if (publishedArticles.length === 0) {
+                    container.innerHTML = '<div class="col-span-full text-center text-gray-500 py-8">Статьи скоро появятся.</div>';
+                    return;
+                }
+
+                container.innerHTML = publishedArticles.map(article => `
+                    <a href="blog/${article.slug}.html" class="block bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md hover:border-primary/30 transition-all group">
+                        <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-3">
+                            <span class="material-symbols-outlined text-[14px]">calendar_today</span>
+                            ${new Date(article.publish_date).toLocaleDateString('ru-RU')}
+                        </div>
+                        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary transition-colors line-clamp-2">${article.title}</h2>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-3">${article.description}</p>
+                        <div class="mt-4 flex items-center text-primary text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-[-10px] group-hover:translate-x-0">
+                            Читать статью <span class="material-symbols-outlined text-sm ml-1">arrow_forward</span>
+                        </div>
+                    </a>
+                `).join('');
+
+            } catch (error) {
+                container.innerHTML = '<div class="col-span-full text-center text-gray-500 py-8">Не удалось загрузить статьи. Попробуйте позже.</div>';
+            }
+        });
+    </script>
+</body>
+</html>
