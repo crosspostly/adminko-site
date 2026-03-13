@@ -1,66 +1,59 @@
+const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
-const { GoogleGenerativeAI } = require('@google/generative-ai');
 
-const API_KEY = process.env.GEMINI_API_KEY;
-const systemPrompt = fs.readFileSync(path.join(__dirname, '../docs/AGENT_PROMPT.md'), 'utf-8');
+/**
+ * ТОТАЛЬНЫЙ РОТАТОР v3.0
+ * Обеспечивает ежедневное покрытие 8 направлений.
+ */
 
-const BASE_PATH = path.join(__dirname, '../content_factory');
+const INDEX_FILE = path.join(__dirname, '../site/public/blog/index.json');
+const PRIORITIZED_TOPICS_FILE = path.join(__dirname, 'prioritized_topics.json');
 
-async function generateMultiChannelContent(topic) {
-    if (!API_KEY) throw new Error("GEMINI_API_KEY не задан");
-    const genAI = new GoogleGenerativeAI(API_KEY);
-    // Используем актуальную модель из списка
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+const CATEGORIES = ['phone', 'laptop', 'b2b_it', 'cctv', 'consoles', 'appliances', 'tv', 'data_recovery'];
 
-    console.log(`\n🚀 Запуск фабрики для темы: "${topic}"`);
+async function orchestrate() {
+    console.log("🚀 Запуск Тотального Ротатора (8 ниш в день)...");
 
-    const fullPrompt = `${systemPrompt}\n\nЗАДАНИЕ:
-    Тема: "${topic}".
-    Сделай 3 варианта контента:
-    1. WEBSITE: Статья для блога (SEO/GEO). HTML формат (только содержимое <article>), лонгрид 4000 знаков.
-    2. ZEN: Пост для Яндекс.Дзена. Формат сторителлинга, упор на личный опыт мастера и эмоции. 3000 знаков.
-    3. SOCIAL: Короткий пост для VK/Telegram. Текст с эмодзи, списком "боли" и четким призывом. 1000 знаков.
-    
-    Верни результат СТРОГО в формате JSON:
-    {
-      "slug": "url-friendly-name",
-      "website": "html content...",
-      "zen": "text content...",
-      "social": "text content...",
-      "metadata": { "title": "...", "description": "..." }
+    if (!fs.existsSync(PRIORITIZED_TOPICS_FILE)) {
+        execSync('node scripts/ai-keyword-analyzer.js', { stdio: 'inherit' });
     }
-    `;
 
-    try {
-        const result = await model.generateContent(fullPrompt);
-        const response = await result.response;
-        let text = response.text();
+    let topics = JSON.parse(fs.readFileSync(PRIORITIZED_TOPICS_FILE, 'utf-8'));
+    
+    // Определяем какую категорию писать сейчас
+    // Логика: находим категорию, которая была опубликована давнее всего
+    const index = JSON.parse(fs.readFileSync(INDEX_FILE, 'utf-8'));
+    
+    let targetCategory = 'phone';
+    const lastUses = {};
+    CATEGORIES.forEach(cat => {
+        const lastArt = [...index].reverse().find(a => a.category === cat);
+        lastUses[cat] = lastArt ? new Date(lastArt.publish_date).getTime() : 0;
+    });
 
-        const jsonMatch = text.match(/\{[\s\S]*\}/);
-        if (!jsonMatch) throw new Error("Не удалось спарсить JSON");
+    // Берем ту категорию, где время последней публикации минимально
+    targetCategory = Object.keys(lastUses).reduce((a, b) => lastUses[a] < lastUses[b] ? a : b);
+
+    console.log(`🎯 Целевая категория на этот запуск: [${targetCategory.toUpperCase()}]`);
+
+    const task = topics.find(t => t.category === targetCategory);
+
+    if (task) {
+        // Перемещаем задачу в начало для auto-blogger
+        const remaining = topics.filter(t => t !== task);
+        fs.writeFileSync(PRIORITIZED_TOPICS_FILE, JSON.stringify([task, ...remaining], null, 2));
         
-        const data = JSON.parse(jsonMatch[0]);
-
-        const dirs = ['website/seo', 'social/zen', 'social/vk_telegram'];
-        dirs.forEach(d => {
-            const fullPath = path.join(BASE_PATH, d);
-            if (!fs.existsSync(fullPath)) fs.mkdirSync(fullPath, { recursive: true });
-        });
-
-        const datePrefix = new Date().toISOString().split('T')[0];
-        const fileName = `${datePrefix}-${data.slug}`;
-
-        fs.writeFileSync(path.join(BASE_PATH, `website/seo/${fileName}.html`), data.website);
-        fs.writeFileSync(path.join(BASE_PATH, `social/zen/${fileName}.txt`), data.zen);
-        fs.writeFileSync(path.join(BASE_PATH, `social/vk_telegram/${fileName}.txt`), data.social);
-
-        console.log(`✅ Успех: ${data.slug}`);
-        return true;
-    } catch (e) {
-        console.error("Ошибка:", e.message);
-        return false;
+        try {
+            execSync('node scripts/auto-blogger.js', { stdio: 'inherit' });
+            console.log(`✅ Направление ${targetCategory} обновлено.`);
+        } catch (e) {
+            console.error("❌ Ошибка:", e.message);
+        }
+    } else {
+        console.log(`⚠️ Нет тем для ${targetCategory}. Пополняем базу...`);
+        execSync('node scripts/ai-keyword-analyzer.js', { stdio: 'inherit' });
     }
 }
 
-module.exports = { generateMultiChannelContent };
+orchestrate();
