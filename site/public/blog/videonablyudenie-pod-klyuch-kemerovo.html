@@ -14,19 +14,14 @@
     <script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#E50914' } } } }</script>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 flex flex-col min-h-screen transition-colors duration-300">
-<div class="brand-stripes w-full sticky top-0 z-[60]">
-    <div class="brand-stripe"></div>
-    <div class="brand-stripe-thin"></div>
-</div>
-
-<nav class="bg-surface-light dark:bg-surface-dark border-b border-gray-200 dark:border-gray-800 sticky top-1.5 z-50 shadow-sm">
+<nav class="bg-surface-light dark:bg-surface-dark border-b border-gray-200 dark:border-gray-800 sticky top-1.5 z-50 shadow-sm transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-20 items-center">
             
             <div class="flex-shrink-0 flex items-center gap-3">
-                <a href="../index.html" class="flex items-center gap-3">
-                    <span class="material-symbols-outlined text-primary text-4xl">build_circle</span>
-                    <span class="font-bold text-2xl tracking-tight hidden md:block dark:text-white">
+                <a href="../index.html" class="flex items-center gap-3 group">
+                    <span class="material-symbols-outlined text-primary text-4xl group-hover:rotate-12 transition-transform">build_circle</span>
+                    <span class="font-bold text-2xl tracking-tighter dark:text-white uppercase italic">
                         Админ<span class="text-primary">.Ко</span>
                     </span>
                 </a>
@@ -38,7 +33,7 @@
                 </div>
                 <input 
                     class="block w-full pl-10 pr-3 py-2.5 border border-gray-200 dark:border-gray-700 rounded-full leading-5 bg-gray-50 dark:bg-gray-800 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm transition duration-150 ease-in-out dark:text-white" 
-                    placeholder="Какая техника сломалась?" 
+                    placeholder="Что у вас сломалось?" 
                     type="text"
                     id="header-search"
                 />
@@ -48,14 +43,25 @@
                 <a href="../services-consumer.html" class="text-gray-600 dark:text-gray-300 hover:text-primary font-medium transition">Для себя</a>
                 <a href="../business.html" class="text-gray-600 dark:text-gray-300 hover:text-primary font-medium transition">Для бизнеса</a>
                 <a href="../price.html" class="text-gray-600 dark:text-gray-300 hover:text-primary font-medium transition">Цены</a>
-                <a href="../blog.html" class="text-primary font-bold hover:underline transition italic">Блог</a>
-                <button onclick="openMessengerModal()" class="inline-flex items-center justify-center px-5 py-2.5 border border-transparent text-sm font-medium rounded-full text-white bg-primary hover:bg-primary-hover transition shadow-sm">
-                    <span class="material-symbols-outlined text-sm mr-1">chat</span>
+                <a href="../blog.html" class="text-gray-600 dark:text-gray-300 hover:text-primary font-medium transition italic">Блог</a>
+                
+                <!-- Кнопка переключения темы (Desktop) -->
+                <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 transition-colors" title="Переключить тему">
+                    <span class="material-symbols-outlined dark:hidden">dark_mode</span>
+                    <span class="material-symbols-outlined hidden dark:block">light_mode</span>
+                </button>
+
+                <button onclick="openMessengerModal()" class="inline-flex items-center justify-center px-6 py-2.5 border border-transparent text-sm font-black rounded-full text-white bg-primary hover:bg-primary-hover transition shadow-lg shadow-primary/20 active:scale-95 uppercase tracking-widest">
                     Написать
                 </button>
             </div>
 
-            <div class="flex items-center md:hidden">
+            <div class="flex items-center md:hidden gap-2">
+                <!-- Кнопка темы (Mobile) -->
+                <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400">
+                    <span class="material-symbols-outlined dark:hidden">dark_mode</span>
+                    <span class="material-symbols-outlined hidden dark:block">light_mode</span>
+                </button>
                 <button type="button" onclick="toggleMobileMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none">
                     <span id="mobile-menu-icon" class="material-symbols-outlined">menu</span>
                 </button>
@@ -63,19 +69,22 @@
         </div>
     </div>
     
-    <!-- Mobile menu, show/hide based on menu state. -->
+    <!-- Mobile menu -->
     <div class="hidden md:hidden bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800" id="mobile-menu">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <a href="../services-consumer.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800">Для себя</a>
             <a href="../business.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800">Для бизнеса</a>
             <a href="../price.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800">Цены</a>
-            <a href="../blog.html" class="block px-3 py-2 rounded-md text-base font-bold text-primary hover:bg-gray-50 dark:hover:bg-gray-800">Блог</a>
-            <button onclick="openMessengerModal()" class="w-full mt-2 flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-xl text-white bg-primary">
+            <a href="../blog.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800">Блог</a>
+            <button onclick="openMessengerModal()" class="w-full mt-2 flex items-center justify-center px-5 py-4 border border-transparent text-base font-black rounded-2xl text-white bg-primary uppercase tracking-widest">
                 Написать инженеру
             </button>
         </div>
     </div>
 </nav>
+
+
+
 <main class="flex-grow max-w-4xl mx-auto px-4 py-12 w-full">
     <article class="prose dark:prose-invert prose-primary lg:prose-xl max-w-none bg-white dark:bg-gray-800 p-8 md:p-16 rounded-[3rem] shadow-2xl border border-gray-100 dark:border-gray-700">
         <div class="flex items-center gap-3 text-xs font-bold text-primary uppercase tracking-widest mb-8">
@@ -275,6 +284,80 @@
     </div>
 </section>
 
+<!-- Карта -->
+<section class="w-full mt-24 mb-16 px-4">
+    <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col items-center mb-10 text-center">
+            <h2 class="text-3xl md:text-4xl font-black mb-3">Наш адрес в Кемерово</h2>
+            <p class="text-gray-500 dark:text-gray-400 flex items-center justify-center gap-2 text-lg">
+                <span class="material-symbols-outlined text-primary">location_on</span>
+                ул. Дзержинского, 2Б (вход со стороны улицы)
+            </p>
+        </div>
+        
+        <div class="bg-gray-100 dark:bg-gray-800 rounded-[2.5rem] h-[600px] md:h-[700px] overflow-hidden border border-gray-200 dark:border-gray-700 shadow-2xl relative">
+            <iframe 
+                src="https://yandex.ru/map-widget/v1/?z=16&ol=biz&oid=1071276806" 
+                width="100%" 
+                height="100%" 
+                frameborder="0" 
+                allowfullscreen="true" 
+                class="dark:opacity-80 dark:contrast-125">
+            </iframe>
+            
+            <!-- Floating Badge -->
+            <div class="absolute bottom-8 right-8 hidden md:block">
+                <a href="https://yandex.ru/maps/org/admin_ko/1071276806/" target="_blank" class="flex items-center gap-4 bg-white dark:bg-gray-900 p-5 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-800 hover:scale-105 transition-transform group">
+                    <div class="w-14 h-14 bg-primary rounded-2xl flex items-center justify-center text-white shadow-lg shadow-primary/20 group-hover:rotate-6 transition-transform">
+                        <span class="material-symbols-outlined text-3xl">directions</span>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-gray-400 uppercase font-black tracking-widest mb-1 text-left">Яндекс Карты</p>
+                        <p class="font-bold text-gray-900 dark:text-white">Построить маршрут</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Карта -->
+<section class="w-full mt-24 mb-16 px-4">
+    <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col items-center mb-10 text-center">
+            <h2 class="text-3xl md:text-4xl font-black mb-3">Наш адрес в Кемерово</h2>
+            <p class="text-gray-500 dark:text-gray-400 flex items-center justify-center gap-2 text-lg">
+                <span class="material-symbols-outlined text-primary">location_on</span>
+                ул. Дзержинского, 2Б (вход со стороны улицы)
+            </p>
+        </div>
+        
+        <div class="bg-gray-100 dark:bg-gray-800 rounded-[2.5rem] h-[600px] md:h-[700px] overflow-hidden border border-gray-200 dark:border-gray-700 shadow-2xl relative">
+            <iframe 
+                src="https://yandex.ru/map-widget/v1/?z=16&ol=biz&oid=1071276806" 
+                width="100%" 
+                height="100%" 
+                frameborder="0" 
+                allowfullscreen="true" 
+                class="dark:opacity-80 dark:contrast-125">
+            </iframe>
+            
+            <!-- Floating Badge -->
+            <div class="absolute bottom-8 right-8 hidden md:block">
+                <a href="https://yandex.ru/maps/org/admin_ko/1071276806/" target="_blank" class="flex items-center gap-4 bg-white dark:bg-gray-900 p-5 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-800 hover:scale-105 transition-transform group">
+                    <div class="w-14 h-14 bg-primary rounded-2xl flex items-center justify-center text-white shadow-lg shadow-primary/20 group-hover:rotate-6 transition-transform">
+                        <span class="material-symbols-outlined text-3xl">directions</span>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-gray-400 uppercase font-black tracking-widest mb-1 text-left">Яндекс Карты</p>
+                        <p class="font-bold text-gray-900 dark:text-white">Построить маршрут</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
 <footer class="bg-text-light dark:bg-black text-white py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid md:grid-cols-4 gap-8 mb-12">
@@ -291,31 +374,25 @@
             <div>
                 <h4 class="font-semibold mb-4 uppercase tracking-widest text-xs text-gray-500">Услуги</h4>
                 <ul class="space-y-2 text-gray-400 text-sm">
-<ul>
                     <li><a href="../phones.html" class="hover:text-white transition-colors">Ремонт смартфонов</a></li>
                     <li><a href="../computers.html" class="hover:text-white transition-colors">Ремонт ноутбуков</a></li>
                     <li><a href="../other-devices.html" class="hover:text-white transition-colors">Другая техника</a></li>
                     <li><a href="../business.html" class="hover:text-white transition-colors">Для бизнеса</a></li>
-
-</ul>                </ul>
+                </ul>
             </div>
             <div>
                 <h4 class="font-semibold mb-4 uppercase tracking-widest text-xs text-gray-500">Компания</h4>
                 <ul class="space-y-2 text-gray-400 text-sm">
-<ul>
                     <li><a href="../blog.html" class="text-primary font-bold hover:underline italic">Инженерный блог</a></li>
                     <li><a href="../price.html" class="hover:text-white transition-colors">Прайс-лист</a></li>
                     <li><a href="../about.html" class="hover:text-white transition-colors">О компании</a></li>
-
-</ul>                </ul>
+                </ul>
             </div>
             <div>
                 <h4 class="font-semibold mb-4 uppercase tracking-widest text-xs text-gray-500">Контакты</h4>
                 <ul class="space-y-2 text-gray-400 text-sm font-bold">
-<ul>
                     <li><a href="tel:+79502767171" onclick="window.location.href='tel:+79502767171'; return false;" class="hover:text-white transition-colors text-lg">+7 (950) 276-71-71</a></li>
-
-</ul>                    <li class="text-gray-300 font-medium mt-2">Кемерово, ул. Дзержинского, 2Б</li>
+                    <li class="text-gray-300 font-medium mt-2">Кемерово, ул. Дзержинского, 2Б</li>
                     <li class="text-[10px] text-gray-500 uppercase tracking-widest">пн-пт: 9-21, сб: 12-18</li>
                 </ul>
             </div>

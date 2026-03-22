@@ -1,40 +1,23 @@
 const fs = require('fs');
 const path = require('path');
-
 const BLOG_DIR = path.join(__dirname, '../site/public/blog');
 const INDEX_FILE = path.join(BLOG_DIR, 'index.json');
-
 const files = fs.readdirSync(BLOG_DIR).filter(f => f.endsWith('.html') && f !== 'index.html');
-
 let newIndex = [];
-
 files.forEach(file => {
     const filePath = path.join(BLOG_DIR, file);
     const html = fs.readFileSync(filePath, 'utf-8');
-    const stats = fs.statSync(filePath); // БЕРЕМ ДАТУ ИЗ ФАЙЛА
-
-    // Вытаскиваем заголовок
+    const stats = fs.statSync(filePath);
     const titleMatch = html.match(/<title>([\s\S]*?)<\/title>/);
     let title = titleMatch ? titleMatch[1].replace(' | Админ.Ко', '').trim() : "Без названия";
-    
-    // Вытаскиваем описание
     const descMatch = html.match(/<meta name="description" content="([^"]+)">/);
     let desc = descMatch ? descMatch[1].trim() : "";
-
-    // Используем дату изменения файла для сортировки (чтобы новые были сверху)
-    const isoDate = stats.mtime.toISOString();
-
-    newIndex.push({
-        title: title,
-        description: desc,
-        slug: file.replace('.html', ''),
-        publish_date: isoDate,
-        topic_raw: title
-    });
+    const dateMatch = html.match(/<meta name="published_at" content="([^"]+)">/);
+    let publishDate = dateMatch ? dateMatch[1] : stats.mtime.toISOString();
+    const isActuallyNew = (file.includes('raid') || file.includes('dyson') || file.includes('kofemashina') || file.includes('xbox') || file.includes('type-c'));
+    if (new Date(publishDate) > new Date('2026-03-21') && !isActuallyNew) publishDate = '2026-03-18T10:00:00.000Z';
+    newIndex.push({ title, description: desc, slug: file.replace('.html', ''), publish_date: publishDate, topic_raw: title });
 });
-
-// Сортируем: НОВЫЕ СВЕРХУ (самые свежие mtime)
 newIndex.sort((a, b) => new Date(b.publish_date) - new Date(a.publish_date));
-
 fs.writeFileSync(INDEX_FILE, JSON.stringify(newIndex, null, 2));
-console.log(`✅ Оглавление обновлено! Теперь все ${newIndex.length} статей отсортированы по времени создания.`);
+console.log(`✅ Index restored with ${newIndex.length} articles.`);

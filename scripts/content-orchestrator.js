@@ -11,8 +11,13 @@ const PRIORITIZED_TOPICS_FILE = path.join(__dirname, 'prioritized_topics.json');
 const CATEGORIES = ['phone', 'laptop', 'b2b_it', 'cctv', 'consoles', 'appliances', 'tv', 'data_recovery'];
 const ARTICLES_PER_CATEGORY = 2; // Итого 16 статей в день
 
+const backupManager = require('./backup-manager');
+
 async function orchestrate() {
     console.log(`🚀 ЗАПУСК КОНВЕЙЕРА: План 1000 (Цель: 16 статей)...`);
+
+    // 0. Автоматический бэкап ПЕРЕД любыми изменениями
+    backupManager();
 
     // 1. Проверка наличия тем
     if (!fs.existsSync(PRIORITIZED_TOPICS_FILE) || JSON.parse(fs.readFileSync(PRIORITIZED_TOPICS_FILE, 'utf-8')).length < 20) {
